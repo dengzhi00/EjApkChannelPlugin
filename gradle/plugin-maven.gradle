@@ -1,0 +1,16 @@
+apply plugin: 'maven'
+
+repositories {
+    mavenCentral()
+}
+
+group=rootProject.ext.EJPLUGIN_GROUPE
+version=rootProject.ext.EJPLUGIN_VERSIOn
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../repo'))
+        }
+    }
+}

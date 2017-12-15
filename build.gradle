@@ -1,0 +1,62 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public'
+//            name 'Google'
+        }
+        maven {
+            url uri('./repo')
+        }
+        google()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.10'
+        classpath 'com.ej.plugin:ejplugin:1.0.0'
+//        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public'
+//            name 'Google'
+        }
+        maven {
+            url uri('./repo')
+        }
+        google()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    JAVA_VERSION = JavaVersion.VERSION_1_7
+    versionCode = 200
+    versionName = "2.0.0"
+
+    compileSdkVersion = 25
+    buildToolsVersion = '26.0.2'
+    minSdkVersion = 15
+    targetSdkVersion = 25
+
+    supportVersion = "25.4.0"
+
+    supportv7 = "25.3.1"
+
+    applicationId = "com.ej.ejservicev_7"
+
+    EJPLUGIN_GROUPE = "com.ej.plugin"
+    EJPLUGIN_VERSIOn = "1.0.0"
+}

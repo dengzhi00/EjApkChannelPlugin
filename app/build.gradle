@@ -1,0 +1,105 @@
+apply plugin: 'com.android.application'
+//apply plugin: 'AndResGuard'
+apply plugin: 'plugin.ej'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    defaultConfig {
+        applicationId rootProject.ext.applicationId
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
+    }
+
+    signingConfigs {
+        release {
+            keyAlias 'ej'
+            keyPassword '123456'
+            storeFile file('./ej_v3_debug.jks')
+            storePassword '123456'
+        }
+        debug{
+            keyAlias 'ej'
+            keyPassword '123456'
+            storeFile file('./ej_v3_debug.jks')
+            storePassword '123456'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            signingConfig signingConfigs.release
+            zipAlignEnabled true // Zipalign优化
+            shrinkResources true // 移除无用的resource文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JAVA_VERSION
+        targetCompatibility JAVA_VERSION
+    }
+}
+
+//andResGuard {
+//    // mappingFile = file("./resource_mapping.txt")
+//    mappingFile = null
+//    // It will be invalid when you sign apk with schemeV2
+//    use7zip = true
+//    useSign = true
+//    // it will keep the origin path of your resources when it's true
+//    keepRoot = false
+//    whiteList = [
+//            // your icon
+////            "R.mipmap.ic_launcher.png",
+//            "R.drawable.ej_luncher",
+//    ]
+//    compressFilePattern = [
+//            "*.png",
+//            "*.jpg",
+//            "*.jpeg",
+//            "*.gif",
+//            "resources.arsc"
+//    ]
+//    sevenzip {
+//        artifact = 'com.tencent.mm:SevenZip:1.2.3'
+//        //path = "/usr/local/bin/7za"
+//    }
+//}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportv7}"
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:0.5'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
+    //    api project(':ejbase')
+    //    api project(':business:ejmain')
+    //    api project(':business:ejmall')
+    //    api project(':business:ejrecharge')
+    //    api project(':business:ejuser')
+}
+
+//afterEvaluate {
+//    tasks.matching {
+//        it.name.startsWith('dex')
+//    }.each { dx ->
+//        if (dx.additionalParameters == null) {
+//            dx.additionalParameters = []
+//        }
+//        dx.additionalParameters += '--multi-dex'
+//        dx.additionalParameters += "--main-dex-list=$projectDir/<filename>".toString()
+//    }
+//}
